@@ -1,25 +1,39 @@
+# Durability Percents
 
-Installation information
-=======
+A lightweight, client-side NeoForge mod for Minecraft 1.21.1 that makes tool durability readable at a glance.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## Features
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+- **Durability percentage** on every damaged tool, in the hotbar and inventory, color-matched to the vanilla durability bar.
+- **Blocks-left estimate** under the crosshair, showing roughly how many more blocks your held tool can mine.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+![Hotbar percentages](docs/hotbar.png)
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+## How the estimate works
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+`blocks left ≈ remaining durability × (Unbreaking level + 1) ÷ durability cost per block`
+
+- Cost per block is read from the tool's own data (1 for most tools, 2 for swords), so modded tools that follow vanilla rules are supported automatically.
+- Unbreaking gives each use a chance to cost nothing, so the estimate is an average; it moves in steps of (level + 1).
+- Hidden for instant-break blocks (no durability cost) and in creative mode.
+
+## Installation
+
+1. Install NeoForge for Minecraft 1.21.1.
+2. Drop the jar into your `mods` folder.
+
+Client-side only: servers don't need it, and you can join servers that don't have it.
+
+## Building from source
+
+Requires JDK 21.
+
+```
+gradlew build
+```
+
+The jar is output to `build/libs/`.
+
+## License
+
+MIT
